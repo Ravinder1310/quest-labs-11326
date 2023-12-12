@@ -1,10 +1,21 @@
 import { Box, Image, Input, InputGroup, InputLeftElement, InputRightElement, Text } from '@chakra-ui/react'
-import React from 'react'
+import axios from 'axios'
+import React, { useState } from 'react'
 import { FaSearch, FaTelegram } from 'react-icons/fa'
+import toast, { Toaster } from 'react-hot-toast';
 
 const SendMessage = () => {
+    const [message,setMessage] = useState("")
+    const notify = () => toast('Message send successfully, We will react you within 24 hours.');
 
-    const handleSendMessage = () => {
+    const handleSendMessage = async() => {
+        try {
+          const res =  await axios.post("https://pink-fierce-kitten.cyclic.app/api/v1/quest/create-messages",message);
+           notify();
+          window.location.reload();
+        } catch (error) {
+            console.log(error);
+        }
 
     }
   return (
@@ -18,13 +29,14 @@ const SendMessage = () => {
       <Text fontSize={"15px"} mt={'20px'} fontWeight={600} textAlign={"center"}>We typically reply within a day</Text>
       <Text textAlign={"center"} color={"white"}>We help your business grow by connecting you to your customers. For more support, tips & tricks, check out the Community https://community.intercom.com</Text>
       <InputGroup mt={'40px'}>
-      <Input type="text" placeholder="Search for help" border={'1px solid black'}/>
+      <Input type="text" placeholder="Search for help" value={message} onChange={(e) => setMessage(e.target.value)} border={'1px solid black'}/>
       <InputRightElement
         pointerEvents="auto"
         cursor="pointer"
         children={<FaTelegram color="gray.300" />}
-        onClick={handleSendMessage} // Attach onClick event to the icon
+        onClick={handleSendMessage}
       />
+      <Toaster />
     </InputGroup>
     </Box>
   )
