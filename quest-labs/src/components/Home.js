@@ -12,37 +12,30 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import { CiHome } from "react-icons/ci";
-import { RiMessage2Line } from "react-icons/ri";
-import { FiHelpCircle } from "react-icons/fi";
-import { MdOutlineArticle } from "react-icons/md";
 import React, { useState } from "react";
 import ModalHome from "./ModalHome";
 import Messages from "./Messages";
 import Help from "./Help";
 import Articles from "./Articles";
+import "../modal.css"
 
 const Home = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [home, setHome] = useState('home');
+  const [home, setHome] = useState("home");
 
   const check = () => {
-    if(home === 'home'){
-      return <ModalHome/>
-    }else if(home === "message"){
-       return <Messages/>
-    }else if(home === "help"){
-       return <Help/>
-    }else{
-       return <Articles/>
-    } 
-  }
+    if (home === "home") {
+      return <ModalHome />;
+    } else if (home === "message") {
+      return <Messages/>;
+    }else {
+      return <Articles />;
+    }
+  };
 
   const handleChange = (value) => {
     setHome(value);
-  }
-
-  
+  };
 
   return (
     <Box>
@@ -112,32 +105,84 @@ const Home = () => {
         onClose={onClose}
         isOpen={isOpen}
         motionPreset="slideInBottom"
+        scrollBehavior="inside"
       >
         <ModalOverlay />
         <ModalContent
-        style={{
-          borderRadius: "20px",
-          position: "absolute",
-          right:20,
-          bottom: 90,
-          transform: "translate(-50%, -50%)",
-          height:"80%",
-          width:"30%"
-        }}
+          style={{
+            borderRadius: "20px",
+            position: "absolute",
+            right: 20,
+            bottom: 90,
+            transform: "translate(-50%, -50%)",
+            height: "80%",
+            width: "100%",
+            maxWidth: { base: "100%", md: "30%" },
+            background: "linear-gradient(to bottom, #2563eb, #f5ece6)"
+          }}
         >
           <ModalHeader></ModalHeader>
           <ModalCloseButton />
-          <ModalBody>
-           {
-            check()
-           }
-          </ModalBody>
+          <ModalBody
+           className="hide-scrollbar"
+           style={{
+             overflowY: 'auto', 
+           }}
+          >{check()}</ModalBody>
           <ModalFooter>
-            <Box w={"100%"} display={'grid'} gap={"10px"} gridTemplateColumns={'25% 25% 25% 25%'} justifyContent={'center'}>
-              <Box textAlign={'center'} display={"grid"} justifyContent={"center"} onClick={() => handleChange('home')}><FontAwesomeIcon icon="fa-solid fa-newspaper" /><Text fontWeight={600} color={'#292929'}>Home</Text></Box>
-              <Box textAlign={'center'} display={"grid"} justifyContent={"center"}  onClick={() => handleChange('message')}><RiMessage2Line /><Text fontWeight={600} color={'#292929'}>Messages</Text></Box>
-              <Box textAlign={'center'} display={"grid"} justifyContent={"center"}  onClick={() => handleChange('help')}><FiHelpCircle /><Text fontWeight={600} color={'#292929'}>Help</Text></Box>
-              <Box textAlign={'center'} display={"grid"} justifyContent={"center"}  onClick={() => handleChange('article')}><MdOutlineArticle /><Text fontWeight={600} color={'#292929'}>Articles</Text></Box>
+            <Box
+              w={"100%"}
+              display={"flex"}
+              // border={'1px solid red'}
+              gap={"10px"}
+              justifyContent={"space-between"}
+              
+              // bgColor={"white"}
+            >
+              <Box
+                _hover={{ cursor: "pointer" }}
+                display={"grid"}
+                justifyContent={"center"}
+                onClick={() => handleChange("home")}
+              >
+                <Image ml={"10px"} src="/images/house-solid.png" />
+                <Text mt={"5px"} fontWeight={600} color={"#292929"}>
+                  Home
+                </Text>
+              </Box>
+              <Box
+                _hover={{ cursor: "pointer" }}
+                display={"grid"}
+                justifyContent={"center"}
+                onClick={() => handleChange("message")}
+              >
+                <Image ml={"25px"} src="/images/message-solid.png" />
+                <Text mt={"5px"} fontWeight={600} color={"#292929"}>
+                  Messages
+                </Text>
+              </Box>
+              {/* <Box
+                _hover={{ cursor: "pointer" }}
+                display={"grid"}
+                justifyContent={"center"}
+                onClick={() => handleChange("help")}
+              >
+                <Image ml={"10px"} src="/images/question-solid.png" />
+                <Text mt={"5px"} fontWeight={600} color={"#292929"}>
+                  Help
+                </Text>
+              </Box> */}
+              <Box
+                _hover={{ cursor: "pointer" }}
+                display={"grid"}
+                justifyContent={"center"}
+                onClick={() => handleChange("news")}
+              >
+                <Image ml={"10px"} src="/images/newspaper-solid.png" />
+                <Text mt={"5px"} fontWeight={600} color={"#292929"}>
+                  Articles
+                </Text>
+              </Box>
             </Box>
           </ModalFooter>
         </ModalContent>
