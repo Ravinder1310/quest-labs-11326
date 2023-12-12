@@ -1,8 +1,11 @@
+import { Box } from '@chakra-ui/react'
 import React from 'react'
 
 const ModalHome = () => {
   return (
-    <div>ModalHome</div>
+    <Box>
+      
+    </Box>
   )
 }
 
